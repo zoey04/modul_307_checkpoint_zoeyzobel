@@ -3,12 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoey Zobel</title>
+    <title>Sponsoring anfragen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Zoey</h1>
-    <p>DAs ist mein Name Zoey</p>
+  <main class="sponsoring">
+    <header class="sponsoring-intro">
+      <p class="kicker">Speerwurf · Partnerschaften</p>
+      <h1>Sponsoring anfragen</h1>
+      <p>Begleite mich auf meinem Weg im Speerwurf oder bei der Arbeit.</p>
+    </header>
+
+    <form class="sponsoring-form" action="anfrage.php" method="post">
+      <div class="form-row">
+        <div class="field">
+          <label for="name">Name / Kontaktperson *</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+
+        <div class="field">
+          <label for="organisation">Unternehmen / Organisation</label>
+          <input id="organisation" name="organisation" type="text" autocomplete="organization">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">E-Mail-Adresse *</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+
+      <fieldset class="interest">
+        <legend>Ich interessiere mich für</legend>
+        <div class="checkboxes">
+          <label for="interesse-sponsoring">
+            <input id="interesse-sponsoring" name="interessen[]" type="checkbox" value="sponsoring">
+            Sponsoring
+          </label>
+          <label for="interesse-partnerschaft">
+            <input id="interesse-partnerschaft" name="interessen[]" type="checkbox" value="partnerschaft">
+            Partnerschaft
+          </label>
+          <label for="interesse-andere">
+            <input id="interesse-andere" name="interessen[]" type="checkbox" value="andere">
+            Andere Zusammenarbeit
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="nachricht">Deine Nachricht *</label>
+        <textarea id="nachricht" name="nachricht" rows="4" required></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit">Anfrage senden</button>
+        <p class="required-note">* Pflichtfelder</p>
+        <!-- Hier kann PHP später eine Rückmeldung ausgeben. -->
+        <p id="formular-erfolg" class="form-feedback" role="status"></p>
+        <p id="formular-fehler" class="form-feedback" role="alert"></p>
+      </div>
+    </form>
+  </main>
     <script src="script.js"></script>
 </body>
 </html>
+
