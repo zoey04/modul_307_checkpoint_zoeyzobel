@@ -156,3 +156,23 @@ button:hover {
     flex-direction: column;
   }
 }
+
+.sponsoring-form .form-feedback:not(:empty) {
+  padding: 12px;
+  border: 1px solid;
+  border-radius: 6px;
+}
+
+#formular-erfolg:not(:empty) {
+  background: #e8f5ec;
+  color: #1f5a37;
+}
+
+#formular-fehler:not(:empty) {
+  background: #fdeceb;
+  color: #8c2525;
+}
+
+.sponsoring-form [aria-invalid="true"] {
+  outline: 2px solid #ff9292;
+}
