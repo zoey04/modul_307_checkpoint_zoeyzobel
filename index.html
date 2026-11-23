@@ -15,10 +15,11 @@
     </header>
 
     <form class="sponsoring-form" action="anfrage.php" method="post">
+      <p class="required-note">Felder mit * sind Pflicht.</p>
       <div class="form-row">
         <div class="field">
           <label for="name">Name / Kontaktperson *</label>
-          <input id="name" name="name" type="text" autocomplete="name" required>
+          <input id="name" name="name" type="text" autocomplete="name" maxlength="100" required>
         </div>
 
         <div class="field">

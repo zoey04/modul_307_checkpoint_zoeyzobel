@@ -11,6 +11,8 @@ $fehler = [];
 
 if ($name === '') {
     $fehler['name'] = 'Bitte gib deinen Namen ein.';
+} elseif (mb_strlen($name, 'UTF-8') > 100) {
+    $fehler['name'] = 'Dein Name darf höchstens 100 Zeichen lang sein.';
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

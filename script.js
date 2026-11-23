@@ -5,6 +5,48 @@ const button = form.querySelector('[type="submit"]');
 
 form.noValidate = true;
 
+function pruefeImBrowser() {
+  const feldfehler = {};
+  const name = form.elements.namedItem("name");
+  const email = form.elements.namedItem("email");
+  const nachricht = form.elements.namedItem("nachricht");
+
+  if (name.value.trim() === "") {
+    feldfehler.name = "Bitte gib deinen Namen ein.";
+  } else if ([...name.value.trim()].length > 100) {
+    feldfehler.name = "Dein Name darf höchstens 100 Zeichen lang sein.";
+  }
+
+  if (!email.checkValidity()) {
+    feldfehler.email = "Bitte gib eine gültige E-Mail-Adresse ein.";
+  }
+
+  if (nachricht.value.trim() === "") {
+    feldfehler.nachricht = "Bitte schreibe eine Nachricht.";
+  }
+
+  return feldfehler;
+}
+function zeigeFehler(feldfehler) {
+  fehler.textContent = "Bitte prüfe deine Angaben:";
+
+  const liste = document.createElement("ul");
+
+  for (const [name, text] of Object.entries(feldfehler)) {
+    const punkt = document.createElement("li");
+    punkt.textContent = text;
+    liste.append(punkt);
+
+    form.elements.namedItem(name)?.setAttribute("aria-invalid", "true");
+  }
+
+  fehler.append(liste);
+  fehler.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
+}
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -14,7 +56,15 @@ form.addEventListener("submit", async (event) => {
     feld.removeAttribute("aria-invalid");
   });
 
+const fehlerBrowser = pruefeImBrowser();
+if (Object.keys(fehlerBrowser).length > 0) {
+  zeigeFehler(fehlerBrowser);
+  return;
+}
+
   button.disabled = true;
+
+  button.textContent = "Wird gesendet …";
 
   try {
     const antwort = await fetch("anfrage.php", {
@@ -29,18 +79,17 @@ form.addEventListener("submit", async (event) => {
       return;
     }
 
-    const feldfehler = daten.fehler ?? {};
-    for (const name of Object.keys(feldfehler)) {
-      form.elements.namedItem(name)?.setAttribute("aria-invalid", "true");
-    }
+if (daten.fehler) {
+  zeigeFehler(daten.fehler);
+} else {
+  fehler.textContent =
+    daten.meldung || "Die Anfrage konnte nicht gespeichert werden.";
+}
 
-    fehler.textContent =
-      Object.values(feldfehler).join(" ") ||
-      daten.meldung ||
-      "Die Anfrage konnte nicht gespeichert werden.";
-  } catch {
+   } catch {
     fehler.textContent = "Keine Verbindung zum Server. Bitte versuch es erneut.";
   } finally {
     button.disabled = false;
+    button.textContent = "Anfrage senden";
   }
 });
